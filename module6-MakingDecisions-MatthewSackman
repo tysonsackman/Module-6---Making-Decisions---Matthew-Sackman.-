@@ -1,0 +1,147 @@
+// Initialize constants
+CONST BASE_FEE = 5.00
+CONST TAX_RATE = 0.14
+CONST FEE_AFTER_100 = 0.03  // Fee per message after the first 100, up to 300 messages
+CONST FEE_AFTER_300 = 0.02  // Fee per message after the 300th message
+CONST SENTINEL_VALUE = -1
+
+// Scenario 1: Collect customer data and display all details
+WHILE True
+    // Collect input data
+    PROMPT "Enter area code (3 digits) or -1 to exit: "
+    INPUT areaCode
+    IF areaCode == SENTINEL_VALUE THEN
+        EXIT WHILE
+    ENDIF
+
+    PROMPT "Enter phone number (7 digits): "
+    INPUT phoneNumber
+
+    PROMPT "Enter total number of text messages sent: "
+    INPUT numMessages
+
+    // Calculate base bill
+    bill = BASE_FEE
+
+    // Apply message fees
+    IF numMessages > 100 AND numMessages <= 300 THEN
+        bill = bill + (numMessages - 100) * FEE_AFTER_100
+    ELSE IF numMessages > 300 THEN
+        bill = bill + (300 - 100) * FEE_AFTER_100 + (numMessages - 300) * FEE_AFTER_300
+    ENDIF
+
+    // Apply tax
+    totalBill = bill + (bill * TAX_RATE)
+
+    // Display all details
+    DISPLAY "Area Code: ", areaCode
+    DISPLAY "Phone Number: ", phoneNumber
+    DISPLAY "Number of Messages: ", numMessages
+    DISPLAY "Bill Before Taxes: $", bill
+    DISPLAY "Total Bill After Taxes: $", totalBill
+END WHILE
+
+// Scenario 2: Display details only for customers who sent over 100 messages
+WHILE True
+    PROMPT "Enter area code (3 digits) or -1 to exit: "
+    INPUT areaCode
+    IF areaCode == SENTINEL_VALUE THEN
+        EXIT WHILE
+    ENDIF
+
+    PROMPT "Enter phone number (7 digits): "
+    INPUT phoneNumber
+
+    PROMPT "Enter total number of text messages sent: "
+    INPUT numMessages
+
+    IF numMessages > 100 THEN
+        // Same calculation logic as above
+        bill = BASE_FEE
+
+        IF numMessages <= 300 THEN
+            bill = bill + (numMessages - 100) * FEE_AFTER_100
+        ELSE
+            bill = bill + (300 - 100) * FEE_AFTER_100 + (numMessages - 300) * FEE_AFTER_300
+        ENDIF
+
+        totalBill = bill + (bill * TAX_RATE)
+
+        DISPLAY "Area Code: ", areaCode
+        DISPLAY "Phone Number: ", phoneNumber
+        DISPLAY "Number of Messages: ", numMessages
+        DISPLAY "Bill Before Taxes: $", bill
+        DISPLAY "Total Bill After Taxes: $", totalBill
+    ENDIF
+END WHILE
+
+// Scenario 3: Display details only if total bill exceeds $10
+WHILE True
+    PROMPT "Enter area code (3 digits) or -1 to exit: "
+    INPUT areaCode
+    IF areaCode == SENTINEL_VALUE THEN
+        EXIT WHILE
+    ENDIF
+
+    PROMPT "Enter phone number (7 digits): "
+    INPUT phoneNumber
+
+    PROMPT "Enter total number of text messages sent: "
+    INPUT numMessages
+
+    // Same calculation logic as above
+    bill = BASE_FEE
+
+    IF numMessages <= 300 THEN
+        bill = bill + (numMessages - 100) * FEE_AFTER_100
+    ELSE
+        bill = bill + (300 - 100) * FEE_AFTER_100 + (numMessages - 300) * FEE_AFTER_300
+    ENDIF
+
+    totalBill = bill + (bill * TAX_RATE)
+
+    IF totalBill > 10 THEN
+        DISPLAY "Area Code: ", areaCode
+        DISPLAY "Phone Number: ", phoneNumber
+        DISPLAY "Number of Messages: ", numMessages
+        DISPLAY "Bill Before Taxes: $", bill
+        DISPLAY "Total Bill After Taxes: $", totalBill
+    ENDIF
+END WHILE
+
+// Scenario 4: Filter bills by area code
+PROMPT "Enter the area code to filter by: "
+INPUT filterAreaCode
+
+WHILE True
+    PROMPT "Enter area code (3 digits) or -1 to exit: "
+    INPUT areaCode
+    IF areaCode == SENTINEL_VALUE THEN
+        EXIT WHILE
+    ENDIF
+
+    PROMPT "Enter phone number (7 digits): "
+    INPUT phoneNumber
+
+    PROMPT "Enter total number of text messages sent: "
+    INPUT numMessages
+
+    IF areaCode == filterAreaCode THEN
+        // Same calculation logic as above
+        bill = BASE_FEE
+
+        IF numMessages <= 300 THEN
+            bill = bill + (numMessages - 100) * FEE_AFTER_100
+        ELSE
+            bill = bill + (300 - 100) * FEE_AFTER_100 + (numMessages - 300) * FEE_AFTER_300
+        ENDIF
+
+        totalBill = bill + (bill * TAX_RATE)
+
+        DISPLAY "Area Code: ", areaCode
+        DISPLAY "Phone Number: ", phoneNumber
+        DISPLAY "Number of Messages: ", numMessages
+        DISPLAY "Bill Before Taxes: $", bill
+        DISPLAY "Total Bill After Taxes: $", totalBill
+    ENDIF
+END WHILE
